@@ -38,7 +38,8 @@ function log_aes_info() {
         const msg = {
             'type': 'aes_info_log',
             'dump': 'aes_info.json',
-            'data_type': 'plain',
+            'data_type': 'json',
+            'timestamp': Date.now(),
             'data': {
                 'iv': '',
                 'alg': alg,
@@ -56,7 +57,9 @@ function log_aes_info() {
         var key = b2s(arr);
         const msg = {
             'type': 'aes_info_log',
-            'dump': 'aes_info.txt',
+            'dump': 'aes_info.json',
+            'data_type': 'json',
+            'timestamp': Date.now(),
             'data': {
                 'iv': '',
                 'alg': alg,
@@ -132,18 +135,11 @@ function log_aes_info() {
     }
 
     function info(iv, alg, plain, encoded) {
-        // send("Performing encryption/decryption");
-        // if (iv) {
-        //     send("Initialization Vector: \\n" + hexdump(b2s(iv)));
-        // } else {
-        //     send("Initialization Vector: " + iv);
-        // }
-        // send("Algorithm: " + alg);
-        // send("In: \\n" + hexdump(b2s(plain)));
-        // send("Out: \\n" + hexdump(b2s(encoded)));
         const msg = {
             'type': 'aes_info_log',
-            'dump': 'aes_info.txt',
+            'dump': 'aes_info.json',
+            'data_type': 'json',
+            'timestamp': Date.now(),
             'data': {
                 'iv': toHexString(iv),
                 'alg': alg,
