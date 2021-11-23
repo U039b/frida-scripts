@@ -15,6 +15,7 @@ function _log_ssl_keys(SSL_CTX_new, SSL_CTX_set_keylog_callback) {
         const msg = {
             'type': 'ssl_key_log',
             'dump': 'sslkeylog.txt',
+            'data_type': 'plain',
             'data': s_line
         }
         send(msg);

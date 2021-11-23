@@ -2,7 +2,7 @@
 import os
 import frida
 import glob
-import tempfile
+import time
 
 from frida_tools.application import ConsoleApplication
 
@@ -32,7 +32,7 @@ class Application(ConsoleApplication):
 
     @staticmethod
     def _agent():
-        js_files = glob.glob(f'{PWD}/*.js', recursive=True)
+        js_files = glob.glob(f'{PWD}/scripts/*.js', recursive=True)
         js_script = ''
         for js_file in js_files:
             with open(js_file, mode='r') as f:
@@ -41,7 +41,6 @@ class Application(ConsoleApplication):
             f.write(js_script)
         return js_script
         
-
     def _start(self):
         self._update_status("Attached")
 
@@ -55,22 +54,29 @@ class Application(ConsoleApplication):
 
         self._update_status("Loading script...")
         self._script.load()
+        self._update_status("Loaded script")
         api = self._script.exports
         api.log_ssl_keys()
         api.log_aes_info()
         self._update_status("Loaded script")
         self._resume()
+        time.sleep(1)
+        api.log_device_info()
 
-    def _instrument(self):
-        pass
+    def _on_child_added(self, child):
+        print("⚡ child_added: {}".format(child))
+        self._instrument(child.pid)
+
+    def _on_child_removed(self, child):
+        print("⚡ child_removed: {}".format(child))
 
     def _on_message(self, message, data):
         # if message["type"] == "send":
         #     if message["payload"] == "session":
         #         self._on_session(data)
         #         return
-
-        print(message)
+        pass
+        # print(message)
 
 
 def main():

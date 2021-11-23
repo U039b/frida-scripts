@@ -1,3 +1,5 @@
+'use strict';
+
 function log_aes_info() {
 
     var use_single_byte = false;
@@ -35,7 +37,8 @@ function log_aes_info() {
         var key = b2s(arr);
         const msg = {
             'type': 'aes_info_log',
-            'dump': 'aes_info.txt',
+            'dump': 'aes_info.json',
+            'data_type': 'plain',
             'data': {
                 'iv': '',
                 'alg': alg,
